@@ -227,19 +227,13 @@ export class Option<T> {
   }
 
   /**
-   * Run a closure and convert it into an Option.
-   * If the function returns `null` or `undefined`, an Option containing None will be reutrned.
-   *
-   * _Note: Please use `fromAsync` to capture the result of asynchronous closures._
-   * @param {Function} fn The closure to run.
-   * @returns {Option<T>} The result of the closure.
+   * Create an Option from a value that is maybe null or undefined
    */
-  static from<T>(fn: () => T | null | undefined): Option<T> {
-    const result = fn();
-    if (result === null || result === undefined) {
+  static from<T>(maybeNull: T | null | undefined): Option<T> {
+    if (maybeNull === null || maybeNull === undefined) {
       return new Option<T>(none);
     } else {
-      return new Option<T>(result);
+      return new Option<T>(maybeNull);
     }
   }
 
