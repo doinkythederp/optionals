@@ -305,6 +305,18 @@ export class Result<T, E extends Error> {
     }
 
     /**
+     * If this is Ok, maps this result using fn and flattens the output.
+     */
+    andThen<U, E2 extends Error>(
+        fn: (input: T) => Result<U, E2>
+    ): Result<U, E | E2> {
+        if (this.isOk()) {
+            return fn(this.val as T);
+        }
+        return this as unknown as Result<U, E>;
+    }
+
+    /**
      * Run a closure in a `try`/`catch` and convert it into a Result.
      *
      * _Note: Please use `fromAsync` to capture the Result of asynchronous closures._
