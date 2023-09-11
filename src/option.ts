@@ -292,7 +292,7 @@ export class Option<T> {
         inspectOptions: unknown,
         inspect: (input: unknown, options: unknown, depth: number) => string
     ): string {
-        if (this.isSome() && depth >= 0) {
+        if (this.isSome()) {
             return `Some(${inspect(this.val, inspectOptions, depth - 1)})`;
         } else {
             return `None`;

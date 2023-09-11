@@ -376,6 +376,15 @@ export class Result<T, E extends Error> {
             }
         );
     }
+
+    [Symbol.for("nodejs.util.inspect.custom")](
+        depth: number,
+        inspectOptions: unknown,
+        inspect: (input: unknown, options: unknown, depth: number) => string
+    ): string {
+        const tag = this.isOk() ? "Ok" : "Err";
+        return `${tag}(${inspect(this.val, inspectOptions, depth - 1)})`;
+    }
 }
 
 /**
