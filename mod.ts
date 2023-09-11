@@ -10,6 +10,6 @@
  */
 
 import { Result, Ok, Err } from "./src/result.ts";
-import { Option, Some, None, none } from "./src/option.ts";
+import { Option, Some, None, none, unwrap } from "./src/option.ts";
 
-export { Result, Ok, Err, Option, Some, None, none };
+export { Result, Ok, Err, Option, Some, None, none, unwrap };
