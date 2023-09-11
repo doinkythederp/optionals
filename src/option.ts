@@ -366,3 +366,11 @@ Object.defineProperty(None, Symbol.hasInstance, {
         return instance?.isNone() || false;
     },
 });
+
+/**
+ * Asserts that the value passed is not null or undefined.
+ */
+export function unwrap<T>(value: T | null | undefined): T {
+    const optional = Option.from(value);
+    return optional.unwrap();
+}
