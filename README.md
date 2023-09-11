@@ -22,9 +22,9 @@ import { Result, Ok, Err } from "https://deno.land/x/optionals@v2.0.2`/mod.ts";
 
 // Option
 import {
-  Option,
-  Some,
-  None,
+    Option,
+    Some,
+    None,
 } from "https://deno.land/x/optionals@v2.0.2/mod.ts";
 ```
 

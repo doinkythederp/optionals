@@ -1,23 +1,15 @@
 {
-  "$schema": "https://json.schemastore.org/package.json",
-  "name": "rust-optionals",
-  "version": "3.0.0",
-  "description": "Rust-like error handling and options for TypeScript, Node, and Deno!",
-  "keywords": [
-    "rust",
-    "error-handling",
-    "option",
-    "result",
-    "optionals"
-  ],
-  "homepage": "https://github.com/OliverBrotchie/optionals#readme",
-  "bugs": "https://github.com/OliverBrotchie/optionals/issues",
-  "license": "MIT",
-  "contributors": [
-    "Oliver Brotchie <oliver@unazoomer.net>"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/OliverBrotchie/optionals.git"
-  }
+    "$schema": "https://json.schemastore.org/package.json",
+    "name": "rust-optionals",
+    "version": "3.0.0",
+    "description": "Rust-like error handling and options for TypeScript, Node, and Deno!",
+    "keywords": ["rust", "error-handling", "option", "result", "optionals"],
+    "homepage": "https://github.com/OliverBrotchie/optionals#readme",
+    "bugs": "https://github.com/OliverBrotchie/optionals/issues",
+    "license": "MIT",
+    "contributors": ["Oliver Brotchie <oliver@unazoomer.net>"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/OliverBrotchie/optionals.git"
+    }
 }
