@@ -27,7 +27,7 @@ Deno.test("Result", async (t) => {
             assert(!new Result(new Error("Test")).isOk());
             assert(!new Result(new TestError("Test")).isOk());
             assert(new Result(new ErrorLookAlike("Test")).isOk());
-        },
+        }
     );
 
     await t.step(
@@ -37,7 +37,7 @@ Deno.test("Result", async (t) => {
             assert(new Result(new Error("Test")).isErr());
             assert(new Result(new TestError("Test")).isErr());
             assert(!new Result(new ErrorLookAlike("Test")).isErr());
-        },
+        }
     );
 
     await t.step("Symbol.toStringTag - Should return correct value.", () => {
@@ -48,7 +48,7 @@ Deno.test("Result", async (t) => {
         "Symbol.iterator - Should return an array with one element.",
         () => {
             assertEquals([...new Result("Ok")], ["Ok"]);
-        },
+        }
     );
 
     await t.step("Symbol.iterator Err - Should return an empty array.", () => {
@@ -70,7 +70,7 @@ Deno.test("Result", async (t) => {
                 return;
             }
             fail("Method did not throw.");
-        },
+        }
     );
 
     await t.step("expectErr - Should get contained Error value.", () => {
@@ -88,7 +88,7 @@ Deno.test("Result", async (t) => {
                 return;
             }
             fail("Method did not throw.");
-        },
+        }
     );
 
     await t.step("unwrap - Should get contained value.", () => {
@@ -131,7 +131,7 @@ Deno.test("Result", async (t) => {
                 return;
             }
             fail("Method did not throw.");
-        },
+        }
     );
 
     await t.step("unwrapOr - Should get contained value.", () => {
@@ -151,7 +151,7 @@ Deno.test("Result", async (t) => {
 
     await t.step("unwrapOrElse Error - Should get computed value.", () => {
         const res = new Result<string, Error>(new Error("Test")).unwrapOrElse(
-            () => "Ok",
+            () => "Ok"
         );
         assertEquals(res, "Ok");
     });
@@ -163,21 +163,21 @@ Deno.test("Result", async (t) => {
 
     await t.step("map Error - Should get Error.", () => {
         const res = new Result<string, Error>(new Error("Test")).map(
-            () => "Test",
+            () => "Test"
         );
         assert(res.isErr());
     });
 
     await t.step("mapErr - Should get mapped value.", () => {
         const res = new Result<string, Error>(new Error("Test")).mapErr(
-            () => new TestError("Ok"),
+            () => new TestError("Ok")
         );
         assertEquals(res.unwrapErr().name, "TestError");
     });
 
     await t.step("mapErr Ok - Should return Ok.", () => {
         const res = new Result<string, Error>("Ok").mapErr(
-            () => new TestError("Test"),
+            () => new TestError("Test")
         );
         assertEquals(res.unwrap(), "Ok");
     });
@@ -190,7 +190,7 @@ Deno.test("Result", async (t) => {
     await t.step("mapOr Error - Should get Error.", () => {
         const res = new Result<string, Error>(new Error("Test")).mapOr(
             "Ok",
-            () => "Test",
+            () => "Test"
         );
         assertEquals(res, "Ok");
     });
@@ -207,7 +207,7 @@ Deno.test("Result", async (t) => {
 
     await t.step("or Error - Should get default value.", () => {
         const res = new Result<string, Error>(new Error("Test")).or(
-            new Result("Ok"),
+            new Result("Ok")
         );
         assertEquals(res.peek(), "Ok");
     });
@@ -240,10 +240,10 @@ Deno.test("Result", async (t) => {
         "flatten - Should converts from Result<Result<T, E>, E> to Result<T, E>",
         () => {
             const res = new Result<Result<string, Error>, Error>(
-                new Result<string, Error>("test"),
+                new Result<string, Error>("test")
             );
-            assert(res.flatten(), new Result("test"));
-        },
+            assertEquals(res.flatten(), new Result("test"));
+        }
     );
 });
 
@@ -271,7 +271,7 @@ Deno.test("Result - Supporting Function Tests", async (t) => {
             const res = Err("Test");
             assertEquals(res.isErr(), true);
             assertEquals(res.unwrapErr().message, "Test");
-        },
+        }
     );
 
     await t.step("Err instanceof - Should return true.", () => {
@@ -295,7 +295,7 @@ Deno.test("Result - Supporting Function Tests", async (t) => {
 
     await t.step("fromAsync - Should return Ok result.", async () => {
         const res = await Result.fromAsync(
-            async () => await Promise.resolve("Test"),
+            async () => await Promise.resolve("Test")
         );
         assert(res.isOk());
         assertEquals(res.peek(), "Test");
@@ -303,7 +303,7 @@ Deno.test("Result - Supporting Function Tests", async (t) => {
 
     await t.step("fromAsync Error - Should return Err result.", async () => {
         const res = await Result.fromAsync(
-            async () => await Promise.reject(new Error("Test")),
+            async () => await Promise.reject(new Error("Test"))
         );
         assert(res.isErr());
         assertEquals((res.peek() as Error).message, "Test");
@@ -320,6 +320,6 @@ Deno.test("Result - Supporting Function Tests", async (t) => {
             ]);
             assertEquals(res.ok, ["1", "2"]);
             assertEquals(res.err.length, 2);
-        },
+        }
     );
 });

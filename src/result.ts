@@ -3,6 +3,10 @@
 
 import { None, Option, Some } from "./option.ts";
 
+type Flatten<T, E1 extends Error> = T extends Result<infer T, infer E2>
+    ? Result<T, E1 | E2>
+    : Result<T, E1>;
+
 /**
  * A Rust-like Result class.
  *
@@ -127,7 +131,7 @@ export class Result<T, E extends Error> {
     unwrap(): T {
         if (this.isErr()) {
             this.formatError(
-                new Error(`Unwrap called on ${(this.val as E).name}`),
+                new Error(`Unwrap called on ${(this.val as E).name}`)
             );
         }
 
@@ -143,9 +147,7 @@ export class Result<T, E extends Error> {
     unwrapErr(): E {
         if (this.isOk()) {
             throw new Error(
-                `UnwrapError called on value - ${
-                    this.val as unknown as string
-                }`,
+                `UnwrapError called on value - ${this.val as unknown as string}`
             );
         }
 
@@ -295,11 +297,11 @@ export class Result<T, E extends Error> {
      * Converts from Result<Result<T, E>, E> to Result<T, E>
      * @returns Option<T>
      */
-    flatten(): Result<T, E> {
+    flatten(): Flatten<T, E> {
         if (this.val instanceof Result) {
-            return this.val;
+            return this.val as unknown as Flatten<T, E>;
         }
-        return this;
+        return this as unknown as Flatten<T, E>;
     }
 
     /**
@@ -347,7 +349,7 @@ export class Result<T, E extends Error> {
      * ```
      */
     static partition<T, E extends Error>(
-        input: Array<Result<T, E>>,
+        input: Array<Result<T, E>>
     ): { ok: Array<T>; err: Array<E> } {
         return input.reduce(
             (acc: { ok: Array<T>; err: Array<E> }, e) => {
@@ -359,7 +361,7 @@ export class Result<T, E extends Error> {
             {
                 ok: [],
                 err: [],
-            },
+            }
         );
     }
 }

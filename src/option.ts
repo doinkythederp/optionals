@@ -1,5 +1,7 @@
 import { Err, Ok, Result } from "./result.ts";
 
+type Unwrap<T> = T extends Option<infer U> ? U : T;
+
 /**
  * The primitive None value.
  *
@@ -219,11 +221,11 @@ export class Option<T> {
      * Converts from Option<Option<T> to Option<T>
      * @returns Option<T>
      */
-    flatten(): Option<T> {
+    flatten(): Option<Unwrap<T>> {
         if (this.val instanceof Option) {
-            return this.val;
+            return this.val as Option<Unwrap<T>>;
         }
-        return this;
+        return this as unknown as Option<Unwrap<T>>;
     }
 
     /**
@@ -275,13 +277,25 @@ export class Option<T> {
      * @returns {Promise<Option<T>>} The result of the closure.
      */
     static async fromAsync<T>(
-        fn: () => Promise<T | null | undefined>,
+        fn: () => Promise<T | null | undefined>
     ): Promise<Option<T>> {
         const result = await fn();
         if (result === null || result === undefined) {
             return new Option<T>(none);
         } else {
             return new Option<T>(result);
+        }
+    }
+
+    [Symbol.for("nodejs.util.inspect.custom")](
+        depth: number,
+        inspectOptions: unknown,
+        inspect: (input: unknown, options: unknown, depth: number) => string
+    ): string {
+        if (this.isSome() && depth >= 0) {
+            return `Some(${inspect(this.val, inspectOptions, depth - 1)})`;
+        } else {
+            return `None`;
         }
     }
 }

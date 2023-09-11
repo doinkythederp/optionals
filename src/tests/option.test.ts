@@ -28,7 +28,7 @@ Deno.test("Option", async (t) => {
         "Symbol.iterator - Should return an array with one element.",
         () => {
             assertEquals([...new Option("Ok")], ["Ok"]);
-        },
+        }
     );
 
     await t.step("Symbol.iterator None - Should return an empty array.", () => {
@@ -50,7 +50,7 @@ Deno.test("Option", async (t) => {
                 return;
             }
             fail("Method did not throw.");
-        },
+        }
     );
 
     await t.step("unwrap - Should get contained value.", () => {
@@ -67,7 +67,7 @@ Deno.test("Option", async (t) => {
                 return;
             }
             fail("Method did not throw.");
-        },
+        }
     );
 
     await t.step("unwrapOr - Should get contained value.", () => {
@@ -142,7 +142,7 @@ Deno.test("Option", async (t) => {
         () => {
             const res = new Option<Option<string>>(new Option<string>("test"));
             assertEquals(res.flatten(), new Option("test"));
-        },
+        }
     );
 });
 
@@ -169,28 +169,24 @@ Deno.test("Result - Supporting Function Tests", async (t) => {
     });
 
     await t.step("from - Should return Ok result.", () => {
-        const res = Option.from(() => "Test");
+        const res = Option.from("Test");
         assert(res.isSome());
         assertEquals(res.peek(), "Test");
     });
 
     await t.step("from Null - Should return None result.", () => {
-        const res = Option.from(() => {
-            return null;
-        });
+        const res = Option.from(null);
         assert(res.isNone());
     });
 
     await t.step("from Undefined - Should return None result.", () => {
-        const res = Option.from(() => {
-            return undefined;
-        });
+        const res = Option.from(undefined);
         assert(res.isNone());
     });
 
     await t.step("fromAsync - Should return Ok result.", async () => {
         const res = await Option.fromAsync(
-            async () => await Promise.resolve("Test"),
+            async () => await Promise.resolve("Test")
         );
         assert(res.isSome());
         assertEquals(res.peek(), "Test");
@@ -198,7 +194,7 @@ Deno.test("Result - Supporting Function Tests", async (t) => {
 
     await t.step("fromAsync Null - Should return None result.", async () => {
         const res = await Option.fromAsync(
-            async () => await Promise.resolve(null),
+            async () => await Promise.resolve(null)
         );
         assert(res.isNone());
     });
@@ -207,9 +203,9 @@ Deno.test("Result - Supporting Function Tests", async (t) => {
         "fromAsync Undefined - Should return None result.",
         async () => {
             const res = await Option.fromAsync(
-                async () => await Promise.resolve(undefined),
+                async () => await Promise.resolve(undefined)
             );
             assert(res.isNone());
-        },
+        }
     );
 });
